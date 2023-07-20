@@ -1,11 +1,11 @@
 * How to run project
 
-Here i have created two prperties file one for development and second-one for deployment.
+Here, I have created two properties file one for development and second-one for deployment.
 
 -> If you want to run this project in localhost then just install mongodb database in your pc and then give credentails
-   in application-dev.properties file.
+   in application-dev.properties file. And give spring.profiles.active=dev in application properties.
 
--> Allthogh i hosted application on railway.app (Which is providing free tier for hosting). So, you can directly access the
+-> Allthough i hosted application on railway.app (Which is providing free tier for hosting). So, you can directly access the
    API from postman.
 
 Here's the domain of hosted application: https://ggslcompany-production.up.railway.app/
