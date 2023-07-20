@@ -29,16 +29,21 @@ public class EmployeeServiceImpl implements EmployeeServices{
         String employeeId = UUID.randomUUID().toString();
         employee.setEmployeeId(employeeId);
         Employee savedEmployee = employeeRepositories.save(employee);
-        Employee ReportEmployee = employeeRepositories.findById(savedEmployee.getReportsTo()).orElseThrow(()->new RuntimeException("Employee not found"));
+        if (savedEmployee.getReportsTo()==null){
+            return savedEmployee;
+        }
+        else {
+            Employee ReportEmployee = employeeRepositories.findById(savedEmployee.getReportsTo()).orElseThrow(() -> new RuntimeException("Employee not found"));
 
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(ReportEmployee.getEmail());
-        mailMessage.setSubject("New Employee Added");
-        mailMessage.setText(employee.getEmployeeName() + " will now work under you. Mobile number is "+employee.getPhoneNumber()+" and Email is "+employee.getEmail()+".");
-        mailMessage.setFrom("21ce071@charusat.edu.in");
-        javaMailSender.send(mailMessage);
+            SimpleMailMessage mailMessage = new SimpleMailMessage();
+            mailMessage.setTo(ReportEmployee.getEmail());
+            mailMessage.setSubject("New Employee Added");
+            mailMessage.setText(employee.getEmployeeName() + " will now work under you. Mobile number is " + employee.getPhoneNumber() + " and Email is " + employee.getEmail() + ".");
+            mailMessage.setFrom("21ce071@charusat.edu.in");
+            javaMailSender.send(mailMessage);
 
-        return savedEmployee;
+            return savedEmployee;
+        }
     }
 
     @Override
